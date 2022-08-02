@@ -17,8 +17,16 @@ const Header = () => {
     }
   },[location])  
   return (
-    <div className='header'>
-        <p className='logo'>User Managemant system</p>
+    <div className='header'>    
+        <Link style={{
+            fontwWeight: "bold",
+            color: "#5c3239",
+            textDecoration: "none",
+            fontSize: "25px",
+            position : "absolute",
+            left:'30px'
+            }} to={"/"}>User Managemant system</Link>
+        {/* <p className='logo'>User Managemant system</p> */}
         <div className='header-right'>
             <Link to='/'>
                 <p className={`${activeTab === "Home" ? "active" : ""}`}
