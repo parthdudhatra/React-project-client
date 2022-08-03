@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const users = useSelector((store) =>store.users)
+  const { users,loading} = useSelector((store) =>store.users)
   console.log("User", users)
   const [data, setData] = useState([])
   useEffect(() =>{
@@ -31,7 +31,7 @@ const Home = () => {
   //   }
   // }
   const getUsers = async () => {
-    const response = await axios.get("http://localhost:3000/auth/users");
+    const response = await axios.get("http://localhost:4200/auth/users");
     if(response.status === 200){
       setData(response.data)
     }
@@ -50,6 +50,7 @@ const Home = () => {
   console.log(".....",users)
   return (
     <div>
+      {loading && <p>Loding</p> }
         <table className='styled-table'>
           <thead>
             <tr>

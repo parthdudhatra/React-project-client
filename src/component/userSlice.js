@@ -1,39 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3000';
-export const cratePost = createAsyncThunk("post/getPost", async({user}) => {
+const baseUrl = 'http://localhost:4200';
+
+// add user data
+export const crateUser = createAsyncThunk("post/createUser", async({user}) => {
     return axios.post(`${baseUrl}/auth/user`, user)
 })
+
+// get user data
+export const getData = createAsyncThunk("get/getData", async() => {
+    return axios.get(`${baseUrl}/auth/users`)
+})
+
 // const initialState = [];
 
 const userSlice = createSlice({
-    // name : "users",
-    // initialState,
-    // reducers : {
-    //     addUsers : (state, action) =>{
-    //         state.push(action.payload)
-    //         console.log(action);
-    //     },
-    //     editUser: (state, action) => {
-    //         const { id, name, email , contact} = action.payload;
-    //         console.log("RRRRRRR",state)
-    //         const existingUser = state.find(user => user.id === id);
-    //         console.log("///////////////////////////",existingUser)
-    //         if(existingUser) {
-    //           existingUser.name = name;
-    //           existingUser.email = email;
-    //           existingUser.contact = contact
-    //         }
-    //       },
-    //       deleteUser: (state, action) => {
-    //         const { id } = action.payload;
-    //         const existingUser = state.find(user => user.id === id);
-    //         if(existingUser) {
-    //           return state.filter(user => user.id !== id);
-    //         }
-    //       }
-    // }
     name : 'post',
     initialState : {
         post : [],
@@ -41,14 +23,14 @@ const userSlice = createSlice({
         error : null
     },
     extraReducers :{
-        [cratePost.pending] : (state, action) => {
+        [crateUser.pending] : (state, action) => {
             state.loading = true
         },
-        [cratePost.fulfilled] : (state , action) =>{
+        [crateUser.fulfilled] : (state , action) =>{
             state.loading = false;
             state.post = [action.payload]
         },
-        [cratePost.rejected] : (state, action) => {
+        [crateUser.rejected] : (state, action) => {
             state.loading = false;
             state.error = action.payload
         }

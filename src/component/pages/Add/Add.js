@@ -4,7 +4,7 @@ import "./Add.css";
 // import { addUser, getOneUser, editUser} from "../../../Service/api";
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
- import { cratePost } from "../../userSlice";
+ import { crateUser } from "../../userSlice";
 
 // const initialValue = {
 //   name : '',
@@ -42,7 +42,7 @@ const Add = () => {
     //   email : user.email,
     //   contact : user.contact
     // }))
-    dispatch(cratePost({user}))
+    dispatch(crateUser({user}))
     setUser({ name : "" , email : "" , contact : ""});
     // addUser(user);
     alert('User added succefully')
