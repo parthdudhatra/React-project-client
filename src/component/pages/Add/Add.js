@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {useNavigate, useParams } from "react-router-dom";
 import "./Add.css";
-// import { addUser, getOneUser, editUser} from "../../../Service/api";
-import { v4 as uuidv4 } from 'uuid';
+import { createUser } from "../../../redux/Features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
- import { crateUser } from "../../userSlice";
 
 // const initialValue = {
 //   name : '',
@@ -13,44 +11,27 @@ import { useDispatch, useSelector } from "react-redux";
 // }
 
 const Add = () => {
-  const dispatch = useDispatch();
-  const { post , loading} = useSelector((state) => ({ ...state.users}))
   const [ user, setUser] = useState({ name : "" , email : "" , contact : ""});
   const { name, email ,contact} = user
-  
+
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.users);
   const navigate = useNavigate();
-  const { id } = useParams();
-  console.log("......", id)
-  useEffect(() => {
-    if(id){
-      // getSingleUser(id)
-    }
-  },[id])
 
-  // const getSingleUser = async (id) =>{
-  //   const response = await getOneUser(id);
-  //   if(response){
-  //     console.log("response", response)
-  //     setUser(response.data)
-  //   }
-  // }
+  const handleSubmit = (e) =>{
+    e.preventDefault();
 
-  const addUserDetails = async(id) =>{
-    // dispatch(addUsers({
-    //   id : uuidv4(),
-    //   name : user.name,
-    //   email : user.email,
-    //   contact : user.contact
-    // }))
-    dispatch(crateUser({user}))
-    setUser({ name : "" , email : "" , contact : ""});
+    dispatch(createUser(user))
+    setUser({ 
+      name : "" , 
+      email : "" , 
+      contact : ""
+    });
     // addUser(user);
     alert('User added succefully')
     console.log("User added succefully", user)
     navigate('/')
   };
-
-  //      
 
   return (
     <div style={{ marignTop: "100px" }}>
@@ -61,7 +42,7 @@ const Add = () => {
           maxWidth: "400px",
           alignContent: "center",
         }}
-        onSubmit={() => addUserDetails()}
+        onSubmit={handleSubmit}
       >
         <label htmlFor="name">Name</label>
         <input

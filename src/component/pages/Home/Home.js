@@ -1,22 +1,18 @@
 import React ,{ useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
-import axios from "axios";
-// import { deleteUser } from "../../userSlice";
-// import { deleteUser } from '../../../Service/api';
+import { getUser, deleteUser } from "../../../redux/Features/userSlice";
 import { useDispatch, useSelector } from 'react-redux';
 
-const Home = () => {
+const Home = ({ setUser} ) => {
   const dispatch = useDispatch();
-  const { users,loading} = useSelector((store) =>store.users)
-  console.log("User", users)
+  const userState = useSelector((state) => state.users);
+  let { user } = userState
+  console.log("user", user)
   const [data, setData] = useState([])
   useEffect(() =>{
-    getUsers();
-  
-    // user()
-  },[])
-
+    getUsers()
+  },[dispatch])
 
   // const user = () => {
   //   let s = new Date();
@@ -30,27 +26,27 @@ const Home = () => {
   //     console.log("false")
   //   }
   // }
+
   const getUsers = async () => {
-    const response = await axios.get("http://localhost:4200/auth/users");
+    const response = dispatch(getUser())
     if(response.status === 200){
       setData(response.data)
     }
   }
-
   const deleteUserData = async (id) => {
-   
     console.log("Id///",id)
     if(
       window.confirm("Are you sure that you wanted to delete that user record")
       ){
         console.log("Id",id)
-        // dispatch(deleteUser({ id }));
+        dispatch(deleteUser(id))
+        getUsers();
       }
   }
-  console.log(".....",users)
+  // console.log(".....",users)
   return (
     <div>
-      {loading && <p>Loding</p> }
+      {/* {loading && <p>Loding</p> } */}
         <table className='styled-table'>
           <thead>
             <tr>
@@ -62,7 +58,7 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            { data && data.map((item, index) => {
+            { user && user.map((item, index) => {
               return(
                 <tr key={index}>
                   <th scope = "row">{index +1}</th>
@@ -71,7 +67,7 @@ const Home = () => {
                   <td>{item.contact}</td>
                   <td>
                     <Link to={`/update/${item._id}`}>
-                      <button className="btn-edit">Edit</button>
+                      <button className="btn-edit" onClick={() => setUser({...item})}>Edit</button>
                     </Link>
                     <button className='btn-delete' onClick={() => deleteUserData(item._id)}>Delete</button>
                     <Link to={`/view/${item._id}`}>

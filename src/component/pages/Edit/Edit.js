@@ -1,48 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import "./Edit.css";
-// import { editUser } from "../../userSlice";
-// import { getOneUser, editUser} from "../../../Service/api";
+import { updateUser } from "../../../redux/Features/userSlice"
 import { useDispatch, useSelector } from "react-redux";
 
-const initialValue = {
-  name : '',
-  email : '',
-  contact: ''
-}
+// const initialValue = {
+//   name : '',
+//   email : '',
+//   contact: ''
+// }
 
-const Edit = () => {
+const Edit = ({ user, setUser}) => {
   const params = useParams();
-  const dispatch = useDispatch();
-  const users = useSelector((store) => store.users);
-  const existingUser = users.filter(user => user.id === params.id);
- const [ user, setUser] = useState(initialValue);
-  const { name, email ,contact} = existingUser[0]
-  
+  const dispatch = useDispatch() 
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // useEffect(() => {
-  //   if(id){
-  //     getSingleUser(id)
-  //   }
-  // },[id])
-
-  // const getSingleUser = async (id) =>{
-  //   const response = await getOneUser(id);
-  //   if(response){
-  //     console.log("response", response)
-  //     setUser(response.data)
-  //   }
+  // const getSingleUser = () =>{
+  //   console.log("Get user", {...user})
+  //   setUser({ ...user})
+    
+  //   // const response = dispatch(getUser({id}))
+  //   // const response = await getOneUser(id);
+  //   // if(response){
+  //   //   console.log("response", response)
+  //   //   setUser(response.data)
+  //   // }
   // }
-
-  const editUserDetails = async() => {
-    // dispatch(editUser({
-    //   id: params.id,
-    //   name: user.name,
-    //   email: user.email
-    // }));
-    // const response = editUser(id, user);
+  const editUserDetails =() => {
+    if( user._id){
+      dispatch(updateUser(user))
+    }
     alert('User Update successfully')
     console.log("User Update successfully", user)
     navigate('/');
@@ -68,7 +56,7 @@ const Edit = () => {
           type="text"
           id="name"
           name="name"
-          value={name}
+          value={user.name}
           placeholder="Enter the name"
           onChange={(e) => {
             onValueChange(e);
@@ -79,7 +67,7 @@ const Edit = () => {
           type="email"
           id="email"
           name="email"
-          value={email}
+          value={user.email}
           placeholder="Enter the email"
           onChange={(e) => {
             onValueChange(e);
@@ -94,7 +82,7 @@ const Edit = () => {
           onChange={(e) => {
             onValueChange(e);
           }}
-          value={contact}
+          value={user.contact}
         />
         <input type="submit" value="update" />
       </form>
