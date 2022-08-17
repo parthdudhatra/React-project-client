@@ -11,22 +11,25 @@ import { useDispatch, useSelector } from "react-redux";
 // }
 
 const Add = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [ user, setUser] = useState({ name : "" , email : "" , contact : ""});
   const { name, email ,contact} = user
 
-  const dispatch = useDispatch();
-  const userState = useSelector((state) => state.users);
-  const navigate = useNavigate();
+  useEffect(() => {
+    
+  })
 
   const handleSubmit = (e) =>{
     e.preventDefault();
-
-    dispatch(createUser(user))
+    const newUser = { ...user }
+    dispatch(createUser(newUser))
     setUser({ 
       name : "" , 
       email : "" , 
       contact : ""
     });
+    // window.localStorage.setItem('users',newUser.toString());
     // addUser(user);
     alert('User added succefully')
     console.log("User added succefully", user)
@@ -71,7 +74,7 @@ const Add = () => {
           onChange={(e) => setUser({ ...user, contact: e.target.value })}
           value={contact}
         />
-        <input type="submit" value="add" />
+        <input type="submit" value="Add" />
       </form>
     </div>
   );

@@ -1,5 +1,7 @@
 import React, { useEffect , useState} from 'react'
 import { useLocation, Link, Outlet } from 'react-router-dom'
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import './Header.css'
 
 
@@ -28,22 +30,31 @@ const Header = () => {
             }} to={"/"}>User Managemant system</Link>
         {/* <p className='logo'>User Managemant system</p> */}
         <div className='header-right'>
-            <Link to='/'>
-                <p className={`${activeTab === "Home" ? "active" : ""}`}
-                onClick={()=>setActiveTab("Home")}
-                >Home</p>
-            </Link>
-            <Link to='/add'>
-                <p className={`${activeTab === "AddUser" ? "active" : ""}`}
-                onClick={()=>setActiveTab("AddUser")}
-                >AddUser</p>
-            </Link>
-            <Link to='/about'>
-                <p className={`${activeTab === "About" ? "active" : ""}`}
-                onClick={()=>setActiveTab("About")}
-                >About</p>
-            </Link>
-            <Outlet />
+        <Stack spacing={2} direction='row'>
+        <Link to='/'>
+            <Button 
+                variant="contained"
+                className={`${activeTab === "Home" ? "active" : ""}`}
+                onClick={()=>setActiveTab("Home")}>Home
+            </Button>
+        </Link>
+        <Link to='/add'>
+            <Button 
+                variant="contained"
+                className={`${activeTab === "AddUser" ? "active" : ""}`}
+                onClick={()=>setActiveTab("AddUser")}>AddUser
+            </Button>
+        </Link>
+        <Link to='/about'>
+            <Button 
+                variant="contained"
+                className={`${activeTab === "About" ? "active" : ""}`}
+                onClick={()=>setActiveTab("About")}>About
+            </Button>
+        </Link>
+        <Outlet />
+        </Stack>
+            
         </div>
     </div>
   )

@@ -1,25 +1,25 @@
 import React,{ useState,useEffect} from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getOneUser } from '../../../Service/api';
+import { useDispatch, useSelector } from 'react-redux';
 import './View.css';
 
 
 const View = () => {
-  const [user, setUser] =useState(null);
-  const { id } = useParams();
-
-  useEffect (()=> {
-    if(id) {
-      getSingleUser(id);
-    }
-  },[id])
-  const getSingleUser = async (id) =>{
-    const response = await getOneUser(id);
-    if(response){
-      console.log("response", response)
-      setUser(response.data)
-    }
-  }
+  const params = useParams();
+  const userState = useSelector((state) => state.users);
+  let { user } = userState
+  const existingUser  = user.filter(item => item._id === params.id)
+  const a = existingUser[0]
+  console.log("data", a)
+  // const [data, setData] =useState({
+  //   name, email, contact
+  // });
+  // useEffect (()=> {
+  //   if(id) {
+  //     setData({ ...user});
+  //   }
+  // },[id])
   return (
     <div style={{marginTop : "150px"}}>
         <div className='card'>
@@ -28,19 +28,19 @@ const View = () => {
           </div>
           <div className='container'>
             <strong>ID: </strong>
-            <span>{id}</span>
+            <span>{a._id}</span>
             <br />
             <br />
             <strong>Name: </strong>
-            <span>{user && user.name}</span>
+            <span>{a.name}</span>
             <br />
             <br />
             <strong>Email: </strong>
-            <span>{user && user.email}</span>
+            <span>{a.email}</span>
             <br />
             <br />
             <strong>Contact: </strong>
-            <span>{ user && user.contact}</span>
+            <span>{a.contact}</span>
             <br />
             <br />
             <Link to='/'>

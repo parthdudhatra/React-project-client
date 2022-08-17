@@ -85,3 +85,13 @@
     cursor: pointer;
     color: black;
 }
+
+/* serch box css here */
+/* #search {
+ background-color: red;
+ width: 75%;
+} */
+
+#Box{
+    margin: 20px;
+}
