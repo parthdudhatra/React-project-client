@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 // }
 
 const Add = () => {
+
+  // React Hooks here
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [ user, setUser] = useState({ name : "" , email : "" , contact : ""});
@@ -24,11 +26,11 @@ const Add = () => {
     e.preventDefault();
     const newUser = { ...user }
     dispatch(createUser(newUser))
-    setUser({ 
-      name : "" , 
-      email : "" , 
-      contact : ""
-    });
+    // setUser({ 
+    //   name : "" , 
+    //   email : "" , 
+    //   contact : ""
+    // });
     // window.localStorage.setItem('users',newUser.toString());
     // addUser(user);
     alert('User added succefully')

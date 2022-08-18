@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import "./Edit.css";
-import { updateUser } from "../../../redux/Features/userSlice"
+import { updateUser, resetList } from "../../../redux/Features/userSlice"
 import { useDispatch, useSelector } from "react-redux";
 
 // const initialValue = {
@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 // }
 
 const Edit = () => {
+
+  // React Hooks here
   const params = useParams();
   const dispatch = useDispatch() 
   const navigate = useNavigate();
@@ -20,9 +22,6 @@ const Edit = () => {
   const {_id,name, email , contact} = existingUser[0];
   const [ value, setValue ] = useState({_id,name, email, contact})
 
-  useEffect(()=>{
-    
-  },[])
 
   // const getSingleUser = () =>{
   //   console.log("Get user", {...user})
@@ -37,24 +36,12 @@ const Edit = () => {
   // }
   const editUserDetails =(e) => {
     e.preventDefault();
+    // dispatch(resetList());
     setValue({_id:'',name: '', email:'', contact:''})
     dispatch(updateUser({_id: value._id ,name : value.name, email : value.email, contact : value.contact} ));
-    setValue({
-      _id :'', 
-      name : "" , 
-      email : "" , 
-      contact : ""
-    });
-    console.log("FFFFFFFFFFF", value)
+    alert("User updated successfully")
     navigate('/')
-    // if( user._id){
-    //   dispatch(updateUser(user))
-    // }
-    // setUser({...user})
-    // alert('User Update successfully')
-    // console.log("User Update successfully", user)
-    // navigate('/');
-}
+  }
   
   // const onValueChange = (e) => {
   //   setValue({...value, [e.target.name] : e.target.value})

@@ -18,6 +18,7 @@ const initialState = {
 export const createUser = createAsyncThunk('user/createUser', async(user,{ rejectWithValue}) => {
     try{
         const response = await axios.post(`${baseUrl}/auth/user`, user)
+        // debugger;
         return response.data
     }catch (error) {
         console.log(error);
@@ -95,6 +96,7 @@ const userSlice = createSlice({
           },
           [createUser.fulfilled]: (state, action) => {
             // state.todos.push(action.payload);
+            // debugger;
             return {
               ...state,
               user: [action.payload, ...state.user],
@@ -228,15 +230,6 @@ const userSlice = createSlice({
             (item) => item._id === action.payload._id
           );
           user[userIndex] = action.payload
-          // debugger;
-          // console.log("////",user)
-          // console.log("llllllllll",updateUser)
-          // debugger;
-          // const updateUsers = state.user.map(
-          //   (use) => use._id === action.payload._id? action.payload : use 
-          // )
-        console.log("mmmmmmmmm",user)
-        // debugger;
         return {
           ...state,
           user: user,
